@@ -2,10 +2,10 @@
 .SUFFIXES: .erl .beam .yrl
 
 .erl.beam:
-    erlc -W $<
+	erlc -W $<
 
 .yrl.erl:
-    erlc -W $<
+	erlc -W $<
 
 ERL = erl -boot start_clean
 
@@ -14,10 +14,12 @@ ERL = erl -boot start_clean
 # to the end of the line and continue on the next line
 
 # Edit the lines below
-MODS = module1 module2 \
-    module3 ... special1 ...\
-    ...
-    moduleN
+# MODS = module1 module2 \
+#     module3 ... special1 ...\
+#     ...
+#     moduleN
+
+MODS = ns
 
 # The first target in any makefile is the default target.
 # If you just type "make" then "make all" is assumed (because
@@ -29,25 +31,25 @@ compile: ${MODS:%=%.beam} subdirs
 
 ## special compilation requirements are added here
 
-special1.beam: special1.erl
-    ${ERL} -Dflag1 -W0 special1.erl
+# special1.beam: special1.erl
+#     ${ERL} -Dflag1 -W0 special1.erl
 
 ## run an application from the makefile
 
-application1: compile
-    ${ERL} -pa Dir1  -s application1 start Arg1 Arg2
+# application1: compile
+#     ${ERL} -pa Dir1  -s application1 start Arg1 Arg2
 
 # the subdirs target compiles any code in
 # sub-directories
 
 subdirs:
-    cd dir1; make
-    cd dir2; make
-        ...
+	@echo ok >> /dev/null
+  # cd dir1; make
+  # cd dir2; make
 
 # remove all the code
 
 clean:
-    rm -rf *.beam erl_crash.dump
-    cd dir1; make clean
-    cd dir2; make clean 
+	echo rm -rf *.beam erl_crash.dump || true
+  # cd dir1; make clean
+  # cd dir2; make clean
